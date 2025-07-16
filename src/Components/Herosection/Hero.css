@@ -1,0 +1,10 @@
+.search-container {
+  border: 2px solid #dedede;
+}
+
+.search-field {
+  border-radius: 40px;
+  transition: all 0.2s ease;
+  height: 70px;
+  gap: 12px;
+}

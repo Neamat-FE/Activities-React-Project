@@ -1,0 +1,246 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Font-size */
+.fs-14 {
+  font-size: 14px !important;
+}
+.fs-16 {
+  font-size: 16px !important;
+}
+.fs-18 {
+  font-size: 18px !important;
+}
+.fs-20 {
+  font-size: 20px !important;
+}
+.rounded-20 {
+  border-radius: 20px !important;
+}
+.fs-22 {
+  font-size: 22px !important;
+}
+.fs-24 {
+  font-size: 24px !important;
+}
+.fs-28 {
+  font-size: 28px !important;
+}
+
+/* Color */
+.primary-color-bg {
+  background-color: #eb1933 !important;
+}
+.primary-color {
+  color: #eb1933 !important;
+}
+.primary-color-text {
+  color: #1d1d1f !important;
+}
+.primary-color-text-bg {
+  background-color: #1d1d1f !important;
+}
+.secondary-color-text {
+  color: #a1a1aa !important;
+}
+.secondary-color-text-bg {
+  background-color: #a1a1aa !important;
+}
+
+.ticket-bg {
+  background-color: #f0f0f0 !important;
+}
+
+.body-bg {
+  background-color: #f5f5f7 !important;
+}
+
+.border-color {
+  border: 2px solid #dedede !important;
+}
+.border-color-bg {
+  background-color: #dedede !important;
+}
+
+.green-color{
+  background-color: #00D250 !important;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    margin: 1rem 0;
+    padding: 1rem;
+  }
+
+  .search-form {
+    padding: 0.75rem;
+  }
+
+  .btn-search {
+    width: 100%;
+    margin-top: 1rem;
+  }
+  .event-search-bar {
+    flex-direction: column;
+    padding: 15px;
+  }
+  .event-search-bar .form-control-wrapper {
+    width: 100%;
+  }
+  .event-search-bar .btn-danger {
+    width: 100%;
+    margin-top: 15px;
+  }
+}
+
+
+@media (max-width: 576px) { 
+  .feature-text {
+    font-size: 10px;
+  }
+ }
+
+@media (max-width: 768px) { 
+  .feature-text {
+    font-size: 10px;
+  }
+ }
+
+@media (max-width: 992px) {
+  .feature-text {
+    font-size: 10px;
+  }
+ }
+
+
+ /* Home Page Styles */
+.category-overlay {
+  color: white;
+}
+
+.date-badge {
+  min-width: 60px;
+}
+
+/* Dot Styles */
+.popular-pagination-dots .dot {
+  width: 8px;
+  height: 8px;
+  background-color: #ccc;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Styles for the second search bar (Find an event by name) */
+.event-search-bar {
+  background-color: #f0f0f0;
+  border-radius: 15px;
+}
+
+.event-search-bar .search-icon-inside-input {
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.event-search-bar .btn-primary {
+  flex-shrink: 0;
+  padding: 15px 30px;
+  border-radius: 10px;
+  background-color: #eb1933;
+  border: none;
+}
+
+/* Styles for the hero section */
+
+.search-container {
+  border: 2px solid #dedede;
+}
+
+.search-field {
+  border-radius: 40px;
+  transition: all 0.2s ease;
+  height: 70px;
+  gap: 12px;
+}
+
+/* Styles for select elements */
+
+.form-select:focus {
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.date-field input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+.search-button {
+  padding: 18px 32px;
+  transition: all 0.2s ease;
+  height: 70px;
+  border-radius: 12px;
+}
+
+/* custom dot control */
+
+.carousel-indicators {
+  bottom: -50px;
+  margin-bottom: 0;
+  margin-top:-60px !important ;
+}
+
+.carousel-indicators [data-bs-target] {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ccc;
+  border: none;
+  margin: 0 8px;
+  opacity: 0.6;
+}
+
+.carousel-indicators .active {
+  background-color: #1d1d1f;
+  opacity: 1;
+}
+
+/* Add bottom margin to container for dot space */
+.carousel {
+  margin-bottom: 80px;
+}
+
+.carousel-item img {
+  object-fit: cover;
+  height: 300px; /* or auto, or set via media query */
+}
+
+.footer a {
+  color: #1d1d1f;
+  font-size: 14px;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.footer a:hover {
+  color: #eb1933;
+}
+
+
+
