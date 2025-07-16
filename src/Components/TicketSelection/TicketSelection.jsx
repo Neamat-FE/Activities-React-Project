@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState, useMemo } from "react"
 import { useNavigate } from "react-router-dom"
 import "./TicketSelection.css"
@@ -117,16 +119,18 @@ const TicketSelection = () => {
     const totalTickets = Object.values(ticketQuantities).reduce((sum, qty) => sum + qty, 0)
 
     const handleClick = () => {
-        // Pass the selected data to payment page
-        const paymentData = {
-            summaryItems,
-            ticketHolders,
-            subtotal,
-            vat,
-            total
+        // Save data to localStorage before navigating
+        try {
+            localStorage.setItem("ticketHolders", JSON.stringify(ticketHolders))
+            localStorage.setItem("summaryItems", JSON.stringify(summaryItems))
+            localStorage.setItem("subtotal", subtotal.toString())
+            localStorage.setItem("vat", vat.toString())
+            localStorage.setItem("total", total.toString())
+        } catch (error) {
+            console.error("Error saving to localStorage:", error)
         }
 
-        navigate("/paymentpage", { state: paymentData })
+        navigate("/paymentpage")
     }
 
     return (

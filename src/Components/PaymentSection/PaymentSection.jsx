@@ -1,5 +1,6 @@
+"use client"
 
-import React, { useState, useMemo } from "react"
+import React, { useState, useMemo, useEffect } from "react"
 import "./PaymentSection.css"
 import visaLogo from "../../assets/visa.png"
 import mastercardLogo from "../../assets/mastercard.png"
@@ -8,7 +9,8 @@ import timeIcon from "../../assets/time.svg"
 import deleteIcon from "../../assets/delete-icon.svg"
 import promoIcon from "../../assets/promo.svg"
 
-const initialTicketHolders = [
+// Default fallback data
+const defaultTicketHolders = [
     {
         id: 1,
         type: "RE",
@@ -29,7 +31,7 @@ const initialTicketHolders = [
     },
 ]
 
-const initialSummaryItems = [
+const defaultSummaryItems = [
     {
         quantity: 1,
         code: "RE",
@@ -46,14 +48,47 @@ const initialSummaryItems = [
     },
 ]
 
-const PaymentSection = () => {
+const PaymentSection = ({
+    initialTicketHolders = null,
+    initialSummaryItems = null,
+    initialSubtotal = null,
+    initialVat = null,
+    initialTotal = null,
+}) => {
     // State management
     const [selectedPayment, setSelectedPayment] = useState("card")
     const [promoCode, setPromoCode] = useState("")
     const [isTermsAccepted, setIsTermsAccepted] = useState(false)
-    const [ticketHolders, setTicketHolders] = useState(initialTicketHolders)
-    const [summaryItems, setSummaryItems] = useState(initialSummaryItems)
+    const [ticketHolders, setTicketHolders] = useState([])
+    const [summaryItems, setSummaryItems] = useState([])
     const [appliedPromo, setAppliedPromo] = useState(null)
+
+    // Load data from props or localStorage on component mount
+    useEffect(() => {
+        // Try to get data from props first, then localStorage, then fallback to defaults
+        let loadedTicketHolders = initialTicketHolders
+        let loadedSummaryItems = initialSummaryItems
+
+        if (!loadedTicketHolders || !loadedSummaryItems) {
+            try {
+                const savedTicketHolders = localStorage.getItem("ticketHolders")
+                const savedSummaryItems = localStorage.getItem("summaryItems")
+
+                if (savedTicketHolders) {
+                    loadedTicketHolders = JSON.parse(savedTicketHolders)
+                }
+                if (savedSummaryItems) {
+                    loadedSummaryItems = JSON.parse(savedSummaryItems)
+                }
+            } catch (error) {
+                console.error("Error loading data from localStorage:", error)
+            }
+        }
+
+        // Set the loaded data or fallback to defaults
+        setTicketHolders(loadedTicketHolders || defaultTicketHolders)
+        setSummaryItems(loadedSummaryItems || defaultSummaryItems)
+    }, [initialTicketHolders, initialSummaryItems])
 
     // Payment method selection
     const handlePaymentSelect = (paymentType) => {
@@ -62,7 +97,15 @@ const PaymentSection = () => {
 
     // Remove ticket holder
     const removeTicketHolder = (holderId) => {
-        setTicketHolders((prev) => prev.filter((holder) => holder.id !== holderId))
+        const updatedHolders = ticketHolders.filter((holder) => holder.id !== holderId)
+        setTicketHolders(updatedHolders)
+
+        // Update localStorage
+        try {
+            localStorage.setItem("ticketHolders", JSON.stringify(updatedHolders))
+        } catch (error) {
+            console.error("Error saving to localStorage:", error)
+        }
     }
 
     // Promo code handling
@@ -95,8 +138,9 @@ const PaymentSection = () => {
 
     // Calculate totals
     const subtotal = useMemo(() => {
+        if (initialSubtotal !== null) return initialSubtotal
         return summaryItems.reduce((sum, item) => sum + item.price, 0)
-    }, [summaryItems])
+    }, [summaryItems, initialSubtotal])
 
     const promoDiscount = useMemo(() => {
         return appliedPromo ? Math.round(subtotal * appliedPromo.discount) : 0
@@ -105,10 +149,14 @@ const PaymentSection = () => {
     const subtotalAfterPromo = subtotal - promoDiscount
 
     const vat = useMemo(() => {
+        if (initialVat !== null && !appliedPromo) return initialVat
         return Math.round(subtotalAfterPromo * 0.15)
-    }, [subtotalAfterPromo])
+    }, [subtotalAfterPromo, initialVat, appliedPromo])
 
-    const total = subtotalAfterPromo + vat
+    const total = useMemo(() => {
+        if (initialTotal !== null && !appliedPromo) return initialTotal
+        return subtotalAfterPromo + vat
+    }, [subtotalAfterPromo, vat, initialTotal, appliedPromo])
 
     const totalTickets = summaryItems.reduce((sum, item) => sum + item.quantity, 0)
 
